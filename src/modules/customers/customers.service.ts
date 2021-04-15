@@ -1,18 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Customer } from './models/customer.model';
+import { CreateCustomerDto } from './dto/create.customer.dto';
+import { CustomerEntity } from './entities/customer.entity';
+import { CustomerRepository } from './repositories/customer.repository';
 
 @Injectable()
 export class CustomersService {
-  private readonly customers: Array<Customer> = [];
-  findCustomerById(id: string) {
-    return this.customers.find((customer) => customer.id === id);
+  constructor(private readonly customerRepository: CustomerRepository) {}
+  async findCustomerById(id: string): Promise<CustomerEntity> {
+    return await this.customerRepository.findOne({
+      where: {
+        id,
+      },
+    });
   }
-  findAll() {
-    return this.customers;
+  async findAll(): Promise<CustomerEntity[]> {
+    const results = await this.customerRepository.find();
+    return results;
   }
-  createCustomer(customer: Customer) {
-    customer.id = this.customers.length + 1 + '';
-    this.customers.push(customer);
-    return customer;
+  createCustomer(customer: CreateCustomerDto) {
+    const newCustomer = this.customerRepository.create(customer);
+    return this.customerRepository.save({ ...newCustomer });
   }
 }

@@ -1,26 +1,22 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { CustomersService } from './customers.service';
-import { CreateCustomerInput } from './dto/create.customer.input';
-import { Customer } from './models/customer.model';
+import { CreateCustomerDto } from './dto/create.customer.dto';
+import { CustomerEntity } from './entities/customer.entity';
 
-@Resolver((of) => Customer)
+@Resolver((of) => CustomerEntity)
 export class CustomersResolver {
   constructor(private readonly customersService: CustomersService) {}
-  @Query((returns) => Customer)
-  async customer(@Args('id') id: string): Promise<Customer> {
+  @Query((returns) => CustomerEntity)
+  async customer(@Args('id') id: string): Promise<CustomerEntity> {
     return this.customersService.findCustomerById(id);
   }
-  @Query((returns) => [Customer])
-  async customers(): Promise<Customer[]> {
+  @Query((returns) => [CustomerEntity])
+  async customers(): Promise<CustomerEntity[]> {
     return this.customersService.findAll();
   }
-  @Mutation((returns) => Customer)
-  async createCustomer(@Args('createCustomerInput') args: CreateCustomerInput) {
-    const createdCustomer = await this.customersService.createCustomer({
-      id: '',
-      ...args,
-    });
-    return createdCustomer;
+  @Mutation((returns) => CustomerEntity)
+  async createCustomer(@Args('createCustomerInput') args: CreateCustomerDto) {
+    return this.customersService.createCustomer(args);
   }
 }
