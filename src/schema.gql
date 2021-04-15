@@ -17,5 +17,5 @@ type Mutation {
 
 type Query {
   customer(id: String!): Customer!
-  customers: [Customer!]!
+  customers(limit: Int = 10, name: String, offset: Int = 0): [Customer!]!
 }
