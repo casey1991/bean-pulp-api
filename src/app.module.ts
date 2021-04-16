@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { CustomersModule } from './modules/customers/customers.module';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { CustomersModule } from './modules/customers/customers.module';
       sortSchema: true,
     }),
     CustomersModule,
+    ProductsModule,
   ],
   controllers: [],
   providers: [],

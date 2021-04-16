@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateProductInput {
+  name: String!
+}
+
 input CreateUserInput {
   name: String!
 }
@@ -13,9 +17,26 @@ type Customer {
 
 type Mutation {
   createCustomer(createCustomerInput: CreateUserInput!): Customer!
+  createProduct(createProductInput: CreateProductInput!): Product!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  unit: ProductUnit!
+}
+
+enum ProductUnit {
+  K
+  KG
+  L
+  ML
+  T
 }
 
 type Query {
   customer(id: String!): Customer!
   customers(limit: Int = 10, name: String, offset: Int = 0): [Customer!]!
+  product(id: String!): Product!
+  products(limit: Int = 10, name: String, offset: Int = 0): [Product!]!
 }
