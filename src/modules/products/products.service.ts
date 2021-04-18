@@ -1,24 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
 import { CreateProductDto } from './dto/create.product.dto';
-import { ProductEntity } from './entities/product.entity';
-import { ProductRepository } from './repositories/product.repository';
+import { Product, ProductDocument } from './schemas/product.schema';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly productRepository: ProductRepository) {}
-  async findProductById(id: string): Promise<ProductEntity> {
-    return await this.productRepository.findOne({
-      where: {
-        id,
-      },
-    });
+  constructor(
+    @InjectModel(Product.name) private model: Model<ProductDocument>,
+  ) {}
+  async findById(id: string): Promise<Product> {
+    const result = await this.model.findById(id);
+    return result;
   }
-  async findAll(): Promise<ProductEntity[]> {
-    const results = await this.productRepository.find();
+  async findAll(): Promise<Product[]> {
+    const results = await this.model.find();
     return results;
   }
-  createProduct(product: CreateProductDto) {
-    const newItem = this.productRepository.create(product);
-    return this.productRepository.save({ ...newItem });
+  async create(product: CreateProductDto): Promise<Product> {
+    const result = await this.model.create(product);
+    return result;
   }
 }

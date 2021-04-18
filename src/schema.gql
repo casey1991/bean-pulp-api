@@ -2,6 +2,31 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Contract {
+  _id: ID!
+  items: [ContractItem!]!
+  number: String!
+}
+
+type ContractItem {
+  currency: Currency!
+  product: ID!
+  quantity: Int!
+  unit_price: Int!
+}
+
+input CreateContractInput {
+  items: [CreateContractItemInput!]!
+  number: String!
+}
+
+input CreateContractItemInput {
+  currency: String
+  product: String!
+  qty: Float
+  unit_price: Float!
+}
+
 input CreateProductInput {
   name: String!
 }
@@ -10,18 +35,23 @@ input CreateUserInput {
   name: String!
 }
 
+enum Currency {
+  CNY
+}
+
 type Customer {
-  id: ID!
+  _id: ID!
   name: String!
 }
 
 type Mutation {
+  createContract(createContractInput: CreateContractInput!): Contract!
   createCustomer(createCustomerInput: CreateUserInput!): Customer!
   createProduct(createProductInput: CreateProductInput!): Product!
 }
 
 type Product {
-  id: ID!
+  _id: ID!
   name: String!
   unit: ProductUnit!
 }
@@ -35,6 +65,8 @@ enum ProductUnit {
 }
 
 type Query {
+  contract(id: String!): Contract!
+  contracts(limit: Int = 10, number: String, offset: Int = 0): [Contract!]!
   customer(id: String!): Customer!
   customers(limit: Int = 10, name: String, offset: Int = 0): [Customer!]!
   product(id: String!): Product!

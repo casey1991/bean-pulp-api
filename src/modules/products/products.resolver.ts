@@ -3,21 +3,21 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create.product.dto';
 import { QueryProductDto } from './dto/query.product.dto';
-import { ProductEntity } from './entities/product.entity';
+import { Product } from './schemas/product.schema';
 
-@Resolver((of) => ProductEntity)
-export class ProductssResolver {
-  constructor(private readonly productsService: ProductsService) {}
-  @Query((returns) => ProductEntity)
-  async product(@Args('id') id: string): Promise<ProductEntity> {
-    return this.productsService.findProductById(id);
+@Resolver((of) => Product)
+export class ProductsResolver {
+  constructor(private readonly service: ProductsService) {}
+  @Query((returns) => Product)
+  async product(@Args('id') id: string): Promise<Product> {
+    return this.service.findById(id);
   }
-  @Query((returns) => [ProductEntity])
-  async products(@Args() args: QueryProductDto): Promise<ProductEntity[]> {
-    return this.productsService.findAll();
+  @Query((returns) => [Product])
+  async products(@Args() args: QueryProductDto): Promise<Product[]> {
+    return this.service.findAll();
   }
-  @Mutation((returns) => ProductEntity)
+  @Mutation((returns) => Product)
   async createProduct(@Args('createProductInput') args: CreateProductDto) {
-    return this.productsService.createProduct(args);
+    return this.service.create(args);
   }
 }
