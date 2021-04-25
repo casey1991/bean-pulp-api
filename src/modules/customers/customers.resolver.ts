@@ -3,6 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CustomersService } from './customers.service';
 import { CustomerInput } from './dto/create.customer.dto';
 import { QueryCustomerDto } from './dto/query.customers.dto';
+import { PaginatedCustomer } from './models/paginated.customer';
 import { Customer } from './schemas/customer.schema';
 
 @Resolver((of) => Customer)
@@ -12,8 +13,8 @@ export class CustomersResolver {
   async customer(@Args('id') id: string): Promise<Customer> {
     return this.customersService.findById(id);
   }
-  @Query((returns) => [Customer])
-  async customers(@Args() args: QueryCustomerDto): Promise<Customer[]> {
+  @Query((returns) => PaginatedCustomer)
+  async customers(@Args() args: QueryCustomerDto): Promise<PaginatedCustomer> {
     let querys: Record<string, any> = {};
     if (args.keywords) {
       querys.$or = [
@@ -25,9 +26,16 @@ export class CustomersResolver {
         { 'location.street': { $regex: args.keywords } },
       ];
     }
-    const results = this.customersService.findAll(querys);
-    console.log(results);
-    return [];
+    const results = await this.customersService.findAll(querys, {
+      offset: args.offset,
+      limit: args.limit,
+    });
+    return {
+      nodes: results.docs,
+      totalCount: results.totalDocs,
+      hasNextPage: results.hasNextPage,
+      totalPages: results.totalPages,
+    };
   }
   @Mutation((returns) => Customer)
   async createCustomer(@Args('customerInput') args: CustomerInput) {

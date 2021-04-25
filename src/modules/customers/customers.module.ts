@@ -7,8 +7,15 @@ import { Customer, CustomerSchema } from './schemas/customer.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Customer.name, schema: CustomerSchema },
+    MongooseModule.forFeatureAsync([
+      {
+        name: Customer.name,
+        useFactory: () => {
+          const schema = CustomerSchema;
+          schema.plugin(require('mongoose-paginate-v2'));
+          return schema;
+        },
+      },
     ]),
   ],
   providers: [CustomersService, CustomersResolver],
