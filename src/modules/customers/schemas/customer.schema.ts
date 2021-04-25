@@ -4,6 +4,27 @@ import { Document } from 'mongoose';
 
 export type CustomerDocument = Customer & Document;
 
+@ObjectType('Location')
+@Schema({ _id: false })
+export class Location {
+  @Field((type) => String)
+  @Prop({ required: true })
+  province: string;
+
+  @Field((type) => String)
+  @Prop({ required: true })
+  city: string;
+
+  @Field((type) => String)
+  @Prop({ required: true })
+  district: string;
+
+  @Field((type) => String, { nullable: true })
+  @Prop({ required: false })
+  street: string;
+}
+export const LocationSchema = SchemaFactory.createForClass(Location);
+
 @ObjectType('Customer')
 @Schema()
 export class Customer {
@@ -13,6 +34,14 @@ export class Customer {
   @Field((type) => String)
   @Prop({ required: true })
   name: string;
+
+  @Field((type) => [String])
+  @Prop({ required: true })
+  phones: string[];
+
+  @Field((type) => Location, { nullable: true })
+  @Prop({ type: LocationSchema, required: false })
+  location: Location;
 }
 
 export const CustomerSchema = SchemaFactory.createForClass(Customer);

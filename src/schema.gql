@@ -31,22 +31,40 @@ input CreateProductInput {
   name: String!
 }
 
-input CreateUserInput {
-  name: String!
-}
-
 enum Currency {
   CNY
 }
 
 type Customer {
   _id: ID!
+  location: Location
   name: String!
+  phones: [String!]!
+}
+
+input CustomerInput {
+  location: LocationInput
+  name: String!
+  phones: [String!]!
+}
+
+type Location {
+  city: String!
+  district: String!
+  province: String!
+  street: String
+}
+
+input LocationInput {
+  city: String!
+  district: String!
+  province: String!
+  street: String
 }
 
 type Mutation {
   createContract(createContractInput: CreateContractInput!): Contract!
-  createCustomer(createCustomerInput: CreateUserInput!): Customer!
+  createCustomer(customerInput: CustomerInput!): Customer!
   createProduct(createProductInput: CreateProductInput!): Product!
 }
 
@@ -68,7 +86,10 @@ type Query {
   contract(id: String!): Contract!
   contracts(limit: Int = 10, number: String, offset: Int = 0): [Contract!]!
   customer(id: String!): Customer!
-  customers(limit: Int = 10, name: String, offset: Int = 0): [Customer!]!
+  customers(keywords: RegExp, limit: Int = 10, offset: Int = 0): [Customer!]!
   product(id: String!): Product!
   products(limit: Int = 10, name: String, offset: Int = 0): [Product!]!
 }
+
+"""Regular Expression custom scalar type"""
+scalar RegExp
