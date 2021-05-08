@@ -1,6 +1,7 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { CustomerType } from 'src/modules/common/enums/customer.type.enum';
 
 export type CustomerDocument = Customer & Document;
 
@@ -42,6 +43,10 @@ export class Customer {
   @Field((type) => Location, { nullable: true })
   @Prop({ type: LocationSchema, required: false })
   location: Location;
+
+  @Field((type) => CustomerType)
+  @Prop({ required: true, default: CustomerType.NORMAL })
+  type: string;
 }
 
 export const CustomerSchema = SchemaFactory.createForClass(Customer);

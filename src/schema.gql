@@ -40,12 +40,17 @@ type Customer {
   location: Location
   name: String!
   phones: [String!]!
+  type: CustomerType!
 }
 
 input CustomerInput {
   location: LocationInput
   name: String!
   phones: [String!]!
+}
+
+enum CustomerType {
+  NORMAL
 }
 
 type Location {
