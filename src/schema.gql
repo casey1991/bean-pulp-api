@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CenterInput {
+  latitude: Float!
+  longitude: Float!
+}
+
 type Contract {
   _id: ID!
   items: [ContractItem!]!
@@ -13,6 +18,11 @@ type ContractItem {
   product: ID!
   quantity: Int!
   unit_price: Int!
+}
+
+type Coordinates {
+  latitude: Float!
+  longitude: Float!
 }
 
 input CreateContractInput {
@@ -71,11 +81,20 @@ type Mutation {
   createContract(createContractInput: CreateContractInput!): Contract!
   createCustomer(customerInput: CustomerInput!): Customer!
   createProduct(createProductInput: CreateProductInput!): Product!
+  createRegion(regionInput: RegionInput!): Region!
+  insertRegions(regionsInput: RegionsInput!): PaginatedRegion!
 }
 
 type PaginatedCustomer {
   hasNextPage: Boolean!
   nodes: [Customer!]
+  totalCount: Int!
+  totalPages: Int!
+}
+
+type PaginatedRegion {
+  hasNextPage: Boolean!
+  nodes: [Region!]
   totalCount: Int!
   totalPages: Int!
 }
@@ -101,7 +120,39 @@ type Query {
   customers(keywords: RegExp, limit: Int = 10, offset: Int = 0): PaginatedCustomer!
   product(id: String!): Product!
   products(limit: Int = 10, name: String, offset: Int = 0): [Product!]!
+  region(id: String!): Region!
+  regions(keywords: RegExp, limit: Int = 10, offset: Int = 0): PaginatedRegion!
 }
 
 """Regular Expression custom scalar type"""
 scalar RegExp
+
+type Region {
+  _id: ID!
+  center: Coordinates
+  children: [Region!]!
+  level: RegionLevel!
+  name: String!
+  parent: Region
+}
+
+input RegionInput {
+  _id: String!
+  center: CenterInput!
+  children: [ID!]!
+  level: RegionLevel!
+  name: String!
+  parent: ID
+}
+
+enum RegionLevel {
+  CITY
+  COUNTRY
+  DISTRICT
+  PROVINCE
+  STREET
+}
+
+input RegionsInput {
+  nodes: [RegionInput!]!
+}
