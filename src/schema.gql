@@ -121,7 +121,7 @@ type Query {
   product(id: String!): Product!
   products(limit: Int = 10, name: String, offset: Int = 0): [Product!]!
   region(id: String!): Region!
-  regions(keywords: RegExp, limit: Int = 10, offset: Int = 0): PaginatedRegion!
+  regions(keywords: RegExp, limit: Int = 10, offset: Int = 0, parent: ID): PaginatedRegion!
 }
 
 """Regular Expression custom scalar type"""
