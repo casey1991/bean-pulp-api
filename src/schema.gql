@@ -77,12 +77,19 @@ input LocationInput {
   street: String
 }
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   createContract(createContractInput: CreateContractInput!): Contract!
   createCustomer(customerInput: CustomerInput!): Customer!
   createProduct(createProductInput: CreateProductInput!): Product!
   createRegion(regionInput: RegionInput!): Region!
+  createUser(userInput: UserInput!): User!
   insertRegions(regionsInput: RegionsInput!): PaginatedRegion!
+  login(loginInput: LoginInput!): Token!
 }
 
 type PaginatedCustomer {
@@ -95,6 +102,13 @@ type PaginatedCustomer {
 type PaginatedRegion {
   hasNextPage: Boolean!
   nodes: [Region!]
+  totalCount: Int!
+  totalPages: Int!
+}
+
+type PaginatedUser {
+  hasNextPage: Boolean!
+  nodes: [User!]
   totalCount: Int!
   totalPages: Int!
 }
@@ -116,12 +130,15 @@ enum ProductUnit {
 type Query {
   contract(id: String!): Contract!
   contracts(limit: Int = 10, number: String, offset: Int = 0): [Contract!]!
+  currentUser: User!
   customer(id: String!): Customer!
   customers(keywords: RegExp, limit: Int = 10, offset: Int = 0): PaginatedCustomer!
   product(id: String!): Product!
   products(limit: Int = 10, name: String, offset: Int = 0): [Product!]!
   region(id: String!): Region!
   regions(keywords: RegExp, limit: Int = 10, offset: Int = 0, parent: ID): PaginatedRegion!
+  user(id: String!): User!
+  users(limit: Int = 10, offset: Int = 0, username: RegExp): PaginatedUser!
 }
 
 """Regular Expression custom scalar type"""
@@ -155,4 +172,17 @@ enum RegionLevel {
 
 input RegionsInput {
   nodes: [RegionInput!]!
+}
+
+type Token {
+  access_token: String!
+}
+
+type User {
+  _id: ID!
+  email: String!
+}
+
+input UserInput {
+  username: String!
 }

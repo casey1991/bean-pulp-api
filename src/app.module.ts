@@ -9,6 +9,8 @@ import { CustomersModule } from './modules/customers/customers.module';
 import { ProductsModule } from './modules/products/products.module';
 import { RegionsModule } from './modules/regions/regions.module';
 import { SeederModule } from './modules/seeder/seeder.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { SeederModule } from './modules/seeder/seeder.module';
     ProductsModule,
     RegionsModule,
     SeederModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
