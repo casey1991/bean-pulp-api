@@ -6,7 +6,7 @@ import { CreateContractDto } from './dto/create.contract.dto';
 import { Contract, ContractDocument } from './schemas/contract.schema';
 
 @Injectable()
-export class ContactsService {
+export class ContractsService {
   constructor(
     @InjectModel(Contract.name) private contractModel: Model<ContractDocument>,
   ) {}

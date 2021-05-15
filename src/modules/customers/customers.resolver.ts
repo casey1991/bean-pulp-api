@@ -37,6 +37,7 @@ export class CustomersResolver {
       totalPages: results.totalPages,
     };
   }
+
   @Mutation((returns) => Customer)
   async createCustomer(@Args('customerInput') args: CustomerInput) {
     return this.customersService.create(args);

@@ -19,5 +19,6 @@ import { Customer, CustomerSchema } from './schemas/customer.schema';
     ]),
   ],
   providers: [CustomersService, CustomersResolver],
+  exports: [CustomersService],
 })
 export class CustomersModule {}

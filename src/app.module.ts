@@ -13,6 +13,7 @@ import { RegionsModule } from './modules/regions/regions.module';
 import { SeederModule } from './modules/seeder/seeder.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
   imports: [
@@ -22,14 +23,15 @@ import { AuthModule } from './modules/auth/auth.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
+    SeederModule,
     CommonModule,
+    AuthModule,
     ContractsModule,
     CustomersModule,
+    OrdersModule,
     ProductsModule,
     RegionsModule,
-    SeederModule,
     UsersModule,
-    AuthModule,
   ],
   controllers: [],
   providers: [],
