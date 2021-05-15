@@ -1,9 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-
 import { ContactsService } from './contracts.service';
 import { CreateContractDto } from './dto/create.contract.dto';
 import { QueryContractsDto } from './dto/query.contracts.dto';
-import { Contract } from './schemas/contract.schema';
+import { Contract, ContractItem } from './schemas/contract.schema';
 @Resolver((of) => Contract)
 export class ContractsResolver {
   constructor(private readonly contactsService: ContactsService) {}

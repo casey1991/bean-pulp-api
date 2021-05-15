@@ -15,8 +15,9 @@ type Contract {
 
 type ContractItem {
   currency: Currency!
-  product: ID!
+  product: Product!
   quantity: Int!
+  remain: Int!
   unit_price: Int!
 }
 
@@ -118,6 +119,7 @@ type Product {
   _id: ID!
   name: String!
   unit: ProductUnit!
+  weight: Int!
 }
 
 enum ProductUnit {
