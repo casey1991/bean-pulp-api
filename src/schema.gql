@@ -90,6 +90,7 @@ type Mutation {
   createUser(userInput: UserInput!): User!
   insertRegions(regionsInput: RegionsInput!): PaginatedRegion!
   login(loginInput: LoginInput!): Token!
+  refreshToken(token: String!): Token!
 }
 
 type PaginatedCustomer {

@@ -16,4 +16,8 @@ export class AuthResolver {
     }
     return result;
   }
+  @Mutation((returns) => Token)
+  async refreshToken(@Args('token') token: string) {
+    return this.service.refreshToken(token);
+  }
 }
