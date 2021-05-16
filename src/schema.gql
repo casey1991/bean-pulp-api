@@ -229,6 +229,7 @@ type Token {
 type User {
   _id: ID!
   email: String!
+  permissions: [String!]!
 }
 
 input UserInput {

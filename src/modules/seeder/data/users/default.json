@@ -1,1 +1,7 @@
-[{ "email": "wangyang1991_work@163.com", "password": "password" }]
+[
+  {
+    "email": "wangyang1991_work@163.com",
+    "password": "password",
+    "permissions": ["CONTRACT_READ", "PROUCT_READ"]
+  }
+]
