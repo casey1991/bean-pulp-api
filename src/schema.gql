@@ -69,6 +69,19 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Driver {
+  _id: ID!
+  name: String!
+  phones: [String!]!
+  vehicle: Vehicle!
+}
+
+input DriverInput {
+  name: String!
+  phones: [String!]!
+  vehicle: VehicleInput!
+}
+
 type Location {
   city: String!
   district: String!
@@ -91,6 +104,7 @@ input LoginInput {
 type Mutation {
   createContract(createContractInput: CreateContractInput!): Contract!
   createCustomer(customerInput: CustomerInput!): Customer!
+  createDriver(driverInput: DriverInput!): Driver!
   createOrder(orderInput: OrderInput!): Order!
   createProduct(createProductInput: CreateProductInput!): Product!
   createRegion(regionInput: RegionInput!): Region!
@@ -137,6 +151,13 @@ type PaginatedCustomer {
   totalPages: Int!
 }
 
+type PaginatedDriver {
+  hasNextPage: Boolean!
+  nodes: [Driver!]
+  totalCount: Int!
+  totalPages: Int!
+}
+
 type PaginatedOrder {
   hasNextPage: Boolean!
   nodes: [Order!]
@@ -179,6 +200,8 @@ type Query {
   currentUser: User!
   customer(id: String!): Customer!
   customers(keywords: RegExp, limit: Int = 10, offset: Int = 0): PaginatedCustomer!
+  driver(id: String!): Driver!
+  drivers(limit: Int = 10, name: RegExp, offset: Int = 0): PaginatedDriver!
   order(id: String!): Order!
   orders(limit: Int = 10, offset: Int = 0, username: RegExp): PaginatedOrder!
   product(id: String!): Product!
@@ -234,4 +257,14 @@ type User {
 
 input UserInput {
   username: String!
+}
+
+type Vehicle {
+  category: String!
+  number: String!
+}
+
+input VehicleInput {
+  category: String!
+  number: String!
 }

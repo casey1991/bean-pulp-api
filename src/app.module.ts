@@ -14,6 +14,7 @@ import { SeederModule } from './modules/seeder/seeder.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { DriversModule } from './modules/drivers/drivers.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { OrdersModule } from './modules/orders/orders.module';
     AuthModule,
     ContractsModule,
     CustomersModule,
+    DriversModule,
     OrdersModule,
     ProductsModule,
     RegionsModule,
