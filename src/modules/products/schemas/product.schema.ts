@@ -14,13 +14,16 @@ export class Product {
   @Field((type) => String)
   @Prop({ required: true })
   name: string;
+  @Field((type) => String, { nullable: true })
+  @Prop({ required: false })
+  description: string;
   @Field((type) => ProductUnit)
   @Prop({ default: ProductUnit.KG, required: true })
   unit: string;
   @Field((type) => Float)
   @Prop({ required: true })
-  unit_weight: string;
-  @Field((type) => String)
+  unit_weight: number;
+  @Field((type) => String, { nullable: true })
   @Prop({ required: false })
   unit_label: string;
 }

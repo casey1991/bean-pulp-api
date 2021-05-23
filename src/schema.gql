@@ -39,7 +39,11 @@ input CreateContractItemInput {
 }
 
 input CreateProductInput {
+  description: String
   name: String!
+  unit: ProductUnit = KG
+  unit_label: String
+  unit_weight: Float!
 }
 
 enum Currency {
@@ -181,9 +185,10 @@ type PaginatedUser {
 
 type Product {
   _id: ID!
+  description: String
   name: String!
   unit: ProductUnit!
-  unit_label: String!
+  unit_label: String
   unit_weight: Float!
 }
 
