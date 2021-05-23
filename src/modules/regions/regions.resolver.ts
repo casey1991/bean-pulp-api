@@ -31,7 +31,10 @@ export class RegionsResolver {
       ];
     }
     if (args.parent) {
-      querys.$and = [{ parent: args.parent }];
+      querys.parent = { $eq: args.parent };
+    }
+    if (args.level) {
+      querys.level = { $eq: args.level };
     }
     const results = await this.service.findAll(querys, {
       offset: args.offset,

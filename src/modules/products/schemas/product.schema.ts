@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID, Int } from '@nestjs/graphql';
+import { Field, ObjectType, ID, Float } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { ObjectId } from 'mongodb';
@@ -11,17 +11,18 @@ export type ProductDocument = Product & Document;
 export class Product {
   @Field((type) => ID)
   _id: ObjectId;
-
   @Field((type) => String)
   @Prop({ required: true })
   name: string;
-
   @Field((type) => ProductUnit)
   @Prop({ default: ProductUnit.KG, required: true })
   unit: string;
-  @Field((type) => Int)
+  @Field((type) => Float)
   @Prop({ required: true })
-  weight: number;
+  unit_weight: string;
+  @Field((type) => String)
+  @Prop({ required: false })
+  unit_label: string;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
