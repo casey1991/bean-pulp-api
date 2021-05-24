@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import {
-  Model,
-  PaginateModel,
-  PaginateOptions,
-  PaginateResult,
-} from 'mongoose';
+import { PaginateModel, PaginateOptions, PaginateResult } from 'mongoose';
 
 import { CreateProductDto } from './dto/create.product.dto';
+import { UpdateProductDto } from './dto/update.product.dto';
 import { Product, ProductDocument } from './schemas/product.schema';
 
 @Injectable()
@@ -28,6 +24,18 @@ export class ProductsService {
   }
   async create(product: CreateProductDto): Promise<Product> {
     const result = await this.model.create(product);
+    return result;
+  }
+  async update(product: UpdateProductDto): Promise<Product> {
+    const result = await this.model.findOneAndUpdate(
+      {
+        _id: product._id,
+      },
+      {
+        ...product,
+      },
+      { new: true },
+    );
     return result;
   }
 }

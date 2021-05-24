@@ -123,6 +123,7 @@ type Mutation {
   insertRegions(regionsInput: RegionsInput!): PaginatedRegion!
   login(loginInput: LoginInput!): Token!
   refreshToken(token: String!): Token!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
 }
 
 type Notification {
@@ -233,7 +234,7 @@ type Query {
   notifications(keywords: String, limit: Int = 10, offset: Int = 0): [Notification!]!
   order(id: String!): Order!
   orders(limit: Int = 10, offset: Int = 0, username: RegExp): PaginatedOrder!
-  product(id: String!): Product!
+  product(_id: ID!): Product!
   products(limit: Int = 10, name: RegExp, offset: Int = 0): PaginatedProduct!
   region(id: String!): Region!
   regions(keywords: RegExp, level: RegionLevel, limit: Int = 10, offset: Int = 0, parent: ID): PaginatedRegion!
@@ -280,6 +281,15 @@ type Subscription {
 
 type Token {
   access_token: String!
+}
+
+input UpdateProductInput {
+  _id: String!
+  description: String
+  name: String
+  unit: ProductUnit = KG
+  unit_label: String
+  unit_weight: Float
 }
 
 type User {

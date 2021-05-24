@@ -27,7 +27,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
-    SeederModule,
+    // SeederModule,
     CommonModule,
     AuthModule,
     ContractsModule,
