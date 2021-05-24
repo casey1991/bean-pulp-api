@@ -7,7 +7,16 @@ import { Product, ProductSchema } from './schemas/product.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Product.name,
+        useFactory: () => {
+          const schema = ProductSchema;
+          schema.plugin(require('mongoose-paginate-v2'));
+          return schema;
+        },
+      },
+    ]),
   ],
   providers: [ProductsService, ProductsResolver],
   exports: [ProductsService],

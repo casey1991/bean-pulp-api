@@ -4,6 +4,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create.product.dto';
 import { QueryProductDto } from './dto/query.product.dto';
 import { Product } from './schemas/product.schema';
+import { PaginatedProduct } from './models/paginated.product';
 
 @Resolver((of) => Product)
 export class ProductsResolver {
@@ -12,9 +13,22 @@ export class ProductsResolver {
   async product(@Args('id') id: string): Promise<Product> {
     return this.service.findById(id);
   }
-  @Query((returns) => [Product])
-  async products(@Args() args: QueryProductDto): Promise<Product[]> {
-    return this.service.findAll();
+  @Query((returns) => PaginatedProduct)
+  async products(@Args() args: QueryProductDto): Promise<PaginatedProduct> {
+    let querys: Record<string, any> = {};
+    if (args.name) {
+      querys.$or = [{ name: { $regex: args.name } }];
+    }
+    const results = await this.service.findAll(querys, {
+      offset: args.offset,
+      limit: args.limit,
+    });
+    return {
+      nodes: results.docs,
+      totalCount: results.totalDocs,
+      hasNextPage: results.hasNextPage,
+      totalPages: results.totalPages,
+    };
   }
   @Mutation((returns) => Product)
   async createProduct(@Args('createProductInput') args: CreateProductDto) {
