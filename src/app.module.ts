@@ -15,12 +15,15 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { DriversModule } from './modules/drivers/drivers.module';
+import { pubSubFactory } from './modules/common/providers/pubsub.provider';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     MongooseModule.forRoot('mongodb://localhost/bean-pulp'),
     GraphQLModule.forRoot({
+      installSubscriptionHandlers: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
@@ -30,6 +33,7 @@ import { DriversModule } from './modules/drivers/drivers.module';
     ContractsModule,
     CustomersModule,
     DriversModule,
+    NotificationsModule,
     OrdersModule,
     ProductsModule,
     RegionsModule,
@@ -37,5 +41,6 @@ import { DriversModule } from './modules/drivers/drivers.module';
   ],
   controllers: [],
   providers: [],
+  exports: [],
 })
 export class AppModule {}

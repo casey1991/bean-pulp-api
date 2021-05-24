@@ -2,6 +2,6 @@
   {
     "email": "wangyang1991_work@163.com",
     "password": "password",
-    "permissions": ["CONTRACT_READ", "PROUCT_READ"]
+    "permissions": ["CONTRACT_READ", "PROUCT_READ", "NOTIFICATIONS_MANAGE"]
   }
 ]

@@ -38,6 +38,12 @@ input CreateContractItemInput {
   unit_price: Float!
 }
 
+input CreateNotificationInput {
+  body: String!
+  title: String!
+  to: [ID!]!
+}
+
 input CreateProductInput {
   description: String
   name: String!
@@ -109,6 +115,7 @@ type Mutation {
   createContract(createContractInput: CreateContractInput!): Contract!
   createCustomer(customerInput: CustomerInput!): Customer!
   createDriver(driverInput: DriverInput!): Driver!
+  createNotification(createNotificationInput: CreateNotificationInput!): Notification!
   createOrder(orderInput: OrderInput!): Order!
   createProduct(createProductInput: CreateProductInput!): Product!
   createRegion(regionInput: RegionInput!): Region!
@@ -116,6 +123,13 @@ type Mutation {
   insertRegions(regionsInput: RegionsInput!): PaginatedRegion!
   login(loginInput: LoginInput!): Token!
   refreshToken(token: String!): Token!
+}
+
+type Notification {
+  _id: ID!
+  body: String!
+  title: String!
+  to: [ID!]!
 }
 
 type Order {
@@ -208,6 +222,8 @@ type Query {
   customers(keywords: RegExp, limit: Int = 10, offset: Int = 0): PaginatedCustomer!
   driver(id: String!): Driver!
   drivers(limit: Int = 10, name: RegExp, offset: Int = 0): PaginatedDriver!
+  notification(id: String!): Notification!
+  notifications(keywords: String, limit: Int = 10, offset: Int = 0): [Notification!]!
   order(id: String!): Order!
   orders(limit: Int = 10, offset: Int = 0, username: RegExp): PaginatedOrder!
   product(id: String!): Product!
@@ -249,6 +265,10 @@ enum RegionLevel {
 
 input RegionsInput {
   nodes: [RegionInput!]!
+}
+
+type Subscription {
+  notificationCreated: Notification!
 }
 
 type Token {
